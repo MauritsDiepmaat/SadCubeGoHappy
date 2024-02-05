@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
+
 
 public class CameraPlayerPosition : MonoBehaviour
 {
@@ -38,7 +38,7 @@ public class CameraPlayerPosition : MonoBehaviour
 
             if (timeSinceLastMove >= timeThreshold)
             {
-                GetComponent<CinemachineVirtualCamera>().Follow = null;
+                
                 transform.position = Vector3.Lerp(transform.position, currentLevelCam.position, transitionSpeed * Time.deltaTime);
                 transitioningCamToPlayer = true;
             }
@@ -56,11 +56,6 @@ public class CameraPlayerPosition : MonoBehaviour
                 {
                     transitioningCamToPlayer = false;
                 }
-            }
-
-            else
-            {
-                GetComponent<CinemachineVirtualCamera>().Follow = playerPosition;
             }
         }
     }
