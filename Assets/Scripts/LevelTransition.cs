@@ -7,7 +7,6 @@ public class LevelTransition : MonoBehaviour
 {
     public GameObject player;
     public GameObject cam;
-    public CameraPlayerPosition cinemachineCam;
 
     public Transform[] nextPlayerPositions;
     public Transform[] nextCameraPositions;
@@ -26,7 +25,6 @@ public class LevelTransition : MonoBehaviour
             //change position player
             player.transform.position = nextPlayerPositions[i].position;
             cam.transform.position = nextCameraPositions[i].position;
-            cinemachineCam.currentLevelCam = nextCameraPositions[i];
             i++;
         }
     }
@@ -71,7 +69,6 @@ public class LevelTransition : MonoBehaviour
         //change position player
         player.transform.position = nextPlayerPositions[i].position;
         cam.transform.position = nextCameraPositions[i].position;
-        cinemachineCam.currentLevelCam = nextCameraPositions[i];
         i++;
 
         // Wait for the specified delay
