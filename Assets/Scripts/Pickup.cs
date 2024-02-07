@@ -6,6 +6,8 @@ public class Pickup : MonoBehaviour
     private bool isHoldingObject;
     private Rigidbody playerRigidbody;
 
+    public Vector3 objectOffset; // Public variable to adjust the object's position offset
+
     private void Start()
     {
         // Assuming your player's Rigidbody is on the same GameObject as this script
@@ -38,12 +40,13 @@ public class Pickup : MonoBehaviour
     {
         // Raycast to check for objects to pick up
         RaycastHit hit;
+        Vector3 raycastOrigin = transform.position + transform.forward * 0f + Vector3.down * 0.5f; // Adjusted raycast origin
         Vector3 raycastDirection = transform.TransformDirection(Vector3.right); // Use Vector3.right for X-axis
 
         // Debug ray to visualize the raycast
-        Debug.DrawRay(transform.position, raycastDirection * 2f, Color.red, 2f);
+        Debug.DrawRay(raycastOrigin, raycastDirection * 2f, Color.red, 2f);
 
-        if (Physics.Raycast(transform.position, raycastDirection, out hit, 2f))
+        if (Physics.Raycast(raycastOrigin, raycastDirection, out hit, 2f))
         {
             // Check if the hit object has a specific tag or component to indicate it's pickable
             if (hit.collider.CompareTag("Pickable"))
@@ -71,6 +74,9 @@ public class Pickup : MonoBehaviour
         // Parent the held object to the player for movement
         objToPickUp.transform.SetParent(transform);
 
+        // Adjust the position of the held object relative to the player
+        objToPickUp.transform.localPosition = objectOffset; // Use the public objectOffset variable
+
         Debug.Log("Picked up: " + objToPickUp.name);
     }
 
@@ -92,8 +98,6 @@ public class Pickup : MonoBehaviour
             // Combine throwing force and jumping force
             Vector3 totalForce = throwDirection.normalized * 5f + jumpForce;
 
-
-
             objRigidbody.velocity = totalForce;
         }
 
@@ -107,6 +111,6 @@ public class Pickup : MonoBehaviour
     private void MoveHeldObject()
     {
         // Move the held object along with the player
-        heldObject.transform.position = transform.position + transform.right * 1.5f;
+        heldObject.transform.position = transform.position + transform.right * 0.8f + Vector3.up * 1.5f; // Adjusted position
     }
 }
